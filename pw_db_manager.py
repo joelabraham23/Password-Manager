@@ -44,7 +44,7 @@ def show_login(website):
     c = conn.cursor()
 
     c.execute("SELECT * FROM login_details WHERE website = (?)",
-    (website))
+    (website,))
     items = c.fetchall()
     conn.commit()
     conn.close()
@@ -56,7 +56,7 @@ def delete_login(website):
     conn = sqlite3.connect("passwordManager.db")
     c = conn.cursor()
     c.execute("DELETE FROM login_details where website = (?)",
-    (website))
+    (website,))
     conn.commit()
     conn.close()
     

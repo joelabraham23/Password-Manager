@@ -33,14 +33,15 @@ def tk_add_login():
 
 
 def tk_show_login():
-    website_input = website_field.get()
+    website_input = retrieve_field.get()
     f_key = Fernet(key)
-    for record in show_login(website_input):
+    records = show_login(website_input)
+    for record in records:
         
         decrypted_password = f_key.decrypt(record[2]).decode()
         login_dets_label = tkinter.Label(root, text = f"{record[1]}     {decrypted_password}\n")
         login_dets_label.grid(row=8, column=0, columnspan=4, ipadx=100)
-    website_field.delete(0, tkinter.END)
+    retrieve_field.delete(0, tkinter.END)
 
 def tk_delete_login():
     website_input = delete_field.get()
@@ -97,8 +98,8 @@ query_button.grid(row=12, column=0, columnspan=2, pady=10, padx=10, ipadx=137)
 retrieve_label = tkinter.Label(root, text="Enter website to retrieve credentials for")
 retrieve_label.grid(row=5, column=0, columnspan=2, pady=10)
 
-website_field = tkinter.Entry(root, width=30)
-website_field.grid(row=6, column=0, columnspan=2)
+retrieve_field = tkinter.Entry(root, width=30)
+retrieve_field.grid(row=6, column=0, columnspan=2)
 
 retrieve_button = tkinter.Button(root, text="Retrieve login for this website", command=tk_show_login)
 retrieve_button.grid(row=7, column=0, columnspan=2, pady=10, padx=10, ipadx=120)

@@ -4,13 +4,17 @@ from pw_db_manager import create_db, display_all, add_login, show_login, delete_
 import tkinter
 from cryptography.fernet import Fernet
 
+
 def tk_display_all():
+    '''Function to display all the login details on tkinter'''
+    # Creating formatting for the GUI
     login_dets_columns = "WEBSITE ------ USERNAME ----- PASSWORD\n"
     columns_label = tkinter.Label(root, text=login_dets_columns)
     columns_label.grid(row=13, column=0, columnspan=2)
     idx = 14
     blank_label = tkinter.Label(root, text='\n').grid(row=idx, column=0, ipadx=100)
     f_key = Fernet(key)
+    # Retrieving all the login details and displaying to the GUI
     for record in display_all():
         decrypted_pw = f_key.decrypt(record[2]).decode()
         login_dets_label=tkinter.Label(root, text=f"{record[0]}     {record[1]}     {decrypted_pw}\n")
@@ -19,33 +23,45 @@ def tk_display_all():
 
 
 def tk_add_login():
+    '''Function to add login details given on tkinter'''
+    # Retrieving all the inputs from GUI
     website_input = website_field.get()
     username_input = username_field.get()
     password_input = password_field.get()
 
+    # Encrypting passwords before adding to the db
     f_key = Fernet(key)
     encoded_password = f_key.encrypt(password_input.encode())
-
     add_login(website_input, username_input, encoded_password)
+
+    # Clearing all input
     website_field.delete(0, tkinter.END)
     username_field.delete(0, tkinter.END)
     password_field.delete(0, tkinter.END)
 
 
 def tk_show_login():
+    '''Function to display a specific login details given its website on tkinter'''
+    # Retreiving all input from GUI
     website_input = retrieve_field.get()
+    # Decrypting passwords from database
     f_key = Fernet(key)
-    records = show_login(website_input)
-    for record in records:
-        
+    # Retrieving all the login details from db and displaying on GUI
+    for record in show_login(website_input):
         decrypted_password = f_key.decrypt(record[2]).decode()
         login_dets_label = tkinter.Label(root, text = f"{record[1]}     {decrypted_password}\n")
         login_dets_label.grid(row=8, column=0, columnspan=4, ipadx=100)
+    
+    # Clearing all previous input
     retrieve_field.delete(0, tkinter.END)
 
 def tk_delete_login():
+    '''Function that will Delete a login on tkinter'''
+    # Retreiving all input from GUI
     website_input = delete_field.get()
+    # Deleting login from db
     delete_login(website_input)
+    # Clearing previous input
     delete_field.delete(0, tkinter.END)
 
 
@@ -58,6 +74,10 @@ key = ""
 with open("key.txt", "rb") as key_file:
     key = key_file.read()
 
+
+'''
+GUI FORMATTING
+'''
 welcome_msg = "Welcome!\nPlease enter your username and password along with its corresponding website\n"
 welcome_label = tkinter.Label(root, text=welcome_msg)
 welcome_label.grid(row=0, column=0, padx=10, pady=20, columnspan=2)

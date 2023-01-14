@@ -66,7 +66,10 @@ def tk_delete_login():
 
 
 # If running password manager for the first time uncomment out this line
-# create_db()
+try:
+    create_db()
+except:
+    pass
 
 root = tkinter.Tk()
 root.title("Password manager")

@@ -2,7 +2,6 @@
 for the database and tkinter to provide a GUI for users."""
 from pw_db_manager import create_db, display_all, add_login, show_login, delete_login, modify_login
 from cryptography.fernet import Fernet
-from fastapi import APIRouter, Body, Depends
 from key_creator import key_creator
 import os
 

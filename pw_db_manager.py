@@ -1,6 +1,4 @@
 import sqlite3
-import tkinter
-from cryptography.fernet import Fernet
 from key_creator import key_creator
 
 def create_db():

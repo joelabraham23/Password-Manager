@@ -1,5 +1,5 @@
-# database
+# Hiding database
 passwordManager.db
 
-# encryption key
+# Hiding encryption key
 key.txt 

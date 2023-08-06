@@ -1,0 +1,5 @@
+# Hiding database
+passwordManager.db
+
+# Hiding encryption key
+key.txt 

@@ -3,3 +3,8 @@ passwordManager.db
 
 # Hiding encryption key
 key.txt 
+.vim/
+dist/
+the_vault.egg-info/
+venv/
+.DS_Store
